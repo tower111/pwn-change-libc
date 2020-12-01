@@ -1,0 +1,30 @@
+#!/bin/bash
+
+FILE_NAME=$1
+LIBC_VERSION=$2
+WORKDIR=$(pwd)
+
+LIBC_DIR=/glibc
+LIBC_DIR=$(find $LIBC_DIR -name "$LIBC_VERSION*")
+if [ "$LIBC_DIR" = "" ];then
+    echo "Not support version or your $LIBC_DIR don't have libc"
+    exit
+fi
+
+EBIT=$(file $FILE_NAME |awk '{print$3}'|cut -c 1-2)
+if [ $EBIT -eq "32" ];then
+    libc_dir=$LIBC_DIR/32/lib
+elif [ $EBIT -eq "64" ];then
+    libc_dir=$LIBC_DIR/64/lib
+else
+    echo "It's not a elf file"
+    exit
+fi
+
+if  [ "$3" ] 
+then
+	patchelf --set-interpreter $libc_dir/ld-$LIBC_VERSION.so --set-rpath $WORKDIR/ $1
+else
+	patchelf --set-interpreter $libc_dir/ld-$LIBC_VERSION.so --set-rpath $libc_dir/ $1
+fi
+echo "success!!!"
