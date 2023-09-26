@@ -10,7 +10,7 @@
 ## 运行
 
 ``` bash
-python get_env.py  
+python get_env.py  #这一步有点慢哈，大概跑一分钟吧
 sudo ln -s /home/tower/glibc-all-in-one/clibc /usr/bin/clibc  #设置软链接需要绝对路径
 ```
 
