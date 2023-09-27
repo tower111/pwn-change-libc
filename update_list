@@ -8,8 +8,8 @@ old_url = 'http://old-releases.ubuntu.com/ubuntu/pool/main/g/glibc/'
 
 
 def get_list(url, arch):
-    content = requests.get(url).content
-    return re.findall('libc6_(2\.[0-9][0-9]-[0-9]ubuntu[0-9\.]*_{}).deb'.format(arch), content)
+    content = requests.get(url).content.decode('utf-8')  # 将字节对象转换为字符串
+    return re.findall('libc6_(2\.[0-9][0-9]-[0-9]ubuntu[0-9\.]*_{})\.deb'.format(arch), content)
 
 
 common_list = get_list(common_url, 'amd64')
@@ -19,7 +19,7 @@ with open('list', 'w') as f:
     for l in sorted(set(common_list)):
         f.write(l + '\n')
 
-print('[+] Common list has been save to "list"')
+print('[+] Common list has been saved to "list"')
 
 old_list = get_list(old_url, 'amd64')
 old_list += get_list(old_url, 'i386')
@@ -28,4 +28,4 @@ with open('old_list', 'w') as f:
     for l in sorted(set(old_list)):
         f.write(l + '\n')
 
-print('[+] Old-release list has been save to "old_list"')
+print('[+] Old-release list has been saved to "old_list"')

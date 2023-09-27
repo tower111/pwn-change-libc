@@ -10,8 +10,8 @@
 ## 运行
 
 ``` bash
-python get_env.py  
-sudo ln -s /home/tower/glibc-all-in-one/clibc /usr/bin/clibc  #设置软链接需要绝对路径
+python get_env.py  #这一步是安装需要的所有libc文件
+sudo ln -s <clibc的绝对路径> /usr/bin/clibc  #到项目文件夹里面去复制clibc，这一步可以把clibc变成全局命令
 ```
 
 修改二进制文件的依赖库
